@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retención Estudiantil · Resultados</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="contenedor">
+      <p class="eyebrow">Tercer momento · Proyecto integrador</p>
+      <h1>Calidad de datos para la retención estudiantil</h1>
+      <p class="lead">Auditoría, limpieza y análisis de deserción con Pandas.</p>
+      <div class="kpis" id="kpis"></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Secciones">
+    <div class="contenedor">
+      <a href="#diagnostico">Diagnóstico</a>
+      <a href="#decisiones">Decisiones</a>
+      <a href="#graficos">Gráficos</a>
+      <a href="#preguntas">Preguntas</a>
+      <a href="#reflexiones">Reflexiones</a>
+    </div>
+  </nav>
+
+  <main class="contenedor">
+    <div id="aviso" class="aviso" hidden>
+      No se encontró <code>web/datos.js</code>. Ejecuta primero <code>python analisis_desercion.py</code>
+      desde la carpeta del proyecto y recarga esta página.
+    </div>
+
+    <section id="diagnostico">
+      <h2>1. Diagnóstico de calidad</h2>
+      <p class="sub">Problemas detectados en el dataset original, antes de corregir nada.</p>
+      <div class="grid-problemas" id="problemas"></div>
+    </section>
+
+    <section id="decisiones">
+      <h2>2. Decisiones de limpieza</h2>
+      <p class="sub">Cada cambio quedó registrado con <code>registrar()</code> y exportado a
+        <code>Data/processed/decisiones.csv</code>.</p>
+      <div class="filtro">
+        <label for="buscar">Filtrar</label>
+        <input id="buscar" type="search" placeholder="Columna, acción o justificación…">
+      </div>
+      <div class="tabla-scroll">
+        <table id="tabla-decisiones">
+          <thead><tr><th>Paso</th><th>Columna</th><th>Acción</th><th class="num">Filas</th><th>Justificación</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="graficos">
+      <h2>3. Gráficos</h2>
+      <p class="sub">Generados por el script en <code>Data/processed/graficos/</code>. Haz clic para ampliar.</p>
+      <div class="galeria">
+        <figure><img src="../Data/processed/graficos/mapa_faltantes.png" alt="Mapa de faltantes"><figcaption>Mapa de faltantes (dataset original)</figcaption></figure>
+        <figure><img src="../Data/processed/graficos/distribuciones_antes_despues.png" alt="Distribuciones antes y después"><figcaption>Promedio y edad: antes vs. después</figcaption></figure>
+        <figure><img src="../Data/processed/graficos/tasa_desercion_por_programa.png" alt="Tasa por programa"><figcaption>Tasa de deserción por programa</figcaption></figure>
+        <figure><img src="../Data/processed/graficos/tasa_desercion_por_asistencia.png" alt="Tasa por asistencia"><figcaption>Tasa de deserción por cuartil de asistencia</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="preguntas">
+      <h2>4. Las cinco preguntas</h2>
+      <p class="sub">Cada respuesta muestra el número de estudiantes por grupo.</p>
+      <div id="lista-preguntas" class="preguntas"></div>
+    </section>
+
+    <section id="reflexiones">
+      <h2>5. Reflexiones</h2>
+      <div class="reflexiones">
+        <article>
+          <h3>Asociación no es causalidad</h3>
+          <p>Los resultados muestran que la deserción va junto con la baja asistencia, el programa o la beca, pero no
+            prueban que una cosa cause la otra. Un estudiante que trabaja muchas horas o tiene problemas económicos
+            puede faltar más <em>y</em> desertar por la misma razón de fondo. Para hablar de causa haría falta un
+            diseño experimental o controlar esas variables. Lo que sí permiten estos datos es <strong>priorizar</strong>:
+            la baja asistencia es una señal temprana de alerta.</p>
+        </article>
+        <article>
+          <h3><code>motivo_retiro</code> y la predicción</h3>
+          <p>El motivo de retiro solo se conoce <strong>después</strong> de que el estudiante deserta, y solo existe
+            para los desertores. Si se usa para predecir la deserción, el modelo "adivina" con información del futuro
+            (fuga de datos): tendría una precisión casi perfecta en el histórico y sería inútil con un estudiante
+            activo. Sirve para describir por qué se retiran, no para anticipar quién se va a retirar.</p>
+        </article>
+        <article>
+          <h3>Variables sensibles</h3>
+          <p>Género, estrato, edad, ciudad o tipo de colegio pueden servir para detectar inequidades y diseñar apoyos,
+            pero no deben usarse para etiquetar ni negar oportunidades a nadie. Su uso debe cumplir la Ley 1581 de 2012
+            (protección de datos personales), con datos anonimizados, acceso restringido y un objetivo claro de
+            apoyo. Las alertas deben basarse sobre todo en conductas modificables (asistencia, tutorías, materias
+            reprobadas) y siempre con revisión humana.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contenedor">Datos sintéticos generados para el taller; no corresponden a estudiantes reales.</div>
+  </footer>
+
+  <dialog id="visor"><img alt=""><button type="button" aria-label="Cerrar">×</button></dialog>
+
+  <script src="datos.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

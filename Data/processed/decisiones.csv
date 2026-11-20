@@ -1,0 +1,23 @@
+paso,columna,accion,filas_afectadas,justificacion
+3,asistencia_pct,Quitar % y convertir a número,300,Con el % la columna se lee como texto; el valor no cambia.
+3,asistencia_pct,'-' a nulo,202,"El guion es un dato faltante, no un 0%."
+3,horas_trabajo_semana,'-' a nulo y convertir a número,2822,Se deja nulo por ahora; en el paso 8 se revisa si el estudiante trabaja.
+3,distancia_km,999 a nulo,152,999 significa sin dato y subiría la distancia promedio.
+4,programa,"strip, minúscula y mapear al valor correcto",260,"Era el mismo valor escrito distinto (tildes, mayúsculas, espacios, abreviaturas); sin unificar, un grupo se parte en varios."
+4,jornada,"strip, minúscula y mapear al valor correcto",485,"Era el mismo valor escrito distinto (tildes, mayúsculas, espacios, abreviaturas); sin unificar, un grupo se parte en varios."
+4,genero,"strip, minúscula y mapear al valor correcto",559,"Era el mismo valor escrito distinto (tildes, mayúsculas, espacios, abreviaturas); sin unificar, un grupo se parte en varios."
+4,ciudad_procedencia,"strip, minúscula y mapear al valor correcto",542,"Era el mismo valor escrito distinto (tildes, mayúsculas, espacios, abreviaturas); sin unificar, un grupo se parte en varios."
+5,fecha_matricula,Convertir a fecha (AAAA-MM-DD y DD/MM/AAAA),3052,Había dos formatos. Se indica cada uno para no confundir día y mes.
+6,todas,Eliminar filas duplicadas,150,Mismo id_estudiante y mismos datos: es el mismo estudiante dos veces.
+7,promedio_acumulado,Dejar nulo,298,No se inventa una nota; mean() ignora los nulos.
+7,ciudad_procedencia,Nulo a 'Sin dato',100,No se puede deducir y borrar la fila haría perder el resto de datos.
+7,tipo_colegio,Nulo a 'Sin dato',150,No se puede deducir y borrar la fila haría perder el resto de datos.
+7,asistencia_pct,Dejar nulo,200,Inventarla cambiaría el cuartil del estudiante; quedan fuera de la pregunta 5.
+7,distancia_km,Dejar nulo (incluye los 999),347,No se usa en las preguntas y no hay cómo deducirla.
+7,motivo_retiro,'No aplica' para activos y graduados,6764,Solo aplica a quien se retiró. Desertores sin motivo: 0.
+8,promedio_acumulado,Mayores que 5 a nulo,15,"45, 62 y 78 no se pueden corregir con seguridad (62/10 sigue fuera de escala)."
+8,edad,Fuera de 15-60 a la mediana (22),12,12 y 150 años son errores. La mediana no se mueve por los extremos.
+8,horas_trabajo_semana,Horas = 0 si no trabaja,2781,"Si no trabaja, sus horas son 0."
+8,horas_trabajo_semana,Más de 100 h a la mediana de quienes trabajan (24),30,200 h/semana no es posible (la semana tiene 168) y poner 0 sería falso.
+9,desertor,estado == 'desertor',10000,Su promedio es la tasa de deserción.
+9,cuartil_asistencia,Cuartiles de asistencia con qcut,9800,Cuatro grupos de tamaño parecido para comparar tasas.
